@@ -20,7 +20,7 @@ if (getApps().length === 0 || !getApps()[0]) {
 
 export const auth = getAuth(firebase_app);
 export const storage = getStorage(firebase_app);
-export const messaging = getMessaging(firebase_app);
+// export const messaging = getMessaging(firebase_app);
 
 export default firebase_app;
 
