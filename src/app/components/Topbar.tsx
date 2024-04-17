@@ -11,12 +11,11 @@ import { auth } from "~/firebase/config";
 const TopBar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  if (pathname === "/signin") return null;
 
   const user = auth.currentUser;
-  console.log("user:", user);
+  // console.log("user:", user);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user === null && pathname !== "/") {
         router.push("/signin");
@@ -24,6 +23,7 @@ const TopBar = () => {
     });
   }, [user]);
 
+  if (pathname === "/signin") return null;
   return (
     <>
       <div className="fixed left-0 right-0 top-0 h-16 bg-gradient-to-r from-amber-400 via-orange-500 to-purple-500 opacity-90 backdrop-blur-lg backdrop-filter">

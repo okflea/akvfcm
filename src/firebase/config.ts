@@ -11,7 +11,7 @@ const FirebaseCredentials = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 let firebase_app: FirebaseApp | undefined;
-if (getApps().length === 0 || getApps()[0] === undefined) {
+if (getApps().length === 0 || !getApps()[0]) {
   firebase_app = initializeApp(FirebaseCredentials);
 } else {
   firebase_app = getApps()[0];
