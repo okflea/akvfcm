@@ -11,7 +11,7 @@ const mockImages = mockUrls.map((url, index) => ({
   url,
 }));
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <h1 className="font-honk text-8xl">Gallery</h1>
@@ -35,4 +35,4 @@ const page = () => {
     </>
   );
 };
-export default page;
+export default Page;

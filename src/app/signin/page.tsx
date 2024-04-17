@@ -10,7 +10,7 @@ const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 
-const page = () => {
+const Page = () => {
   const onSubmit = async (data: FormData) => {
     const { phone } = data;
     const isValid = phoneRegex.test(phone);
@@ -64,4 +64,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
