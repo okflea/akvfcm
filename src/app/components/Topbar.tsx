@@ -7,13 +7,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect } from "react";
 import { toast } from "sonner";
 import { auth } from "~/firebase/config";
+import { useAuth } from "../context/AuthContext";
 
 const TopBar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const user = auth.currentUser;
-  // console.log("user:", user);
+  const { user } = useAuth();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -63,7 +63,7 @@ const TopBar = () => {
                 </button>
               ) : (
                 <div className="flex items-center gap-4">
-                  <p> {`Hi, ${user.displayName}`}</p>
+                  <p> {`Hi, ${user.name}`}</p>
                   <button
                     className="rounded-lg bg-slate-100  p-2  hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                     onClick={() => {
@@ -71,7 +71,8 @@ const TopBar = () => {
                       auth
                         .signOut()
                         .then(() => {
-                          // toast.success("Sign Out Successful");
+                          // router.push("/signin");
+                          toast.success("Sign Out Successful");
                         })
                         .catch((err) => {
                           toast.error("Something went wrong");

@@ -14,6 +14,7 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import axios from "axios";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
@@ -22,18 +23,17 @@ const phoneRegex = new RegExp(
 const Page = () => {
   const router = useRouter();
 
-  const user = auth.currentUser;
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push("/gallery");
-      }
-    });
-  }, []);
   const provider = new GoogleAuthProvider();
   const handleLoginWithGoogle = async () => {
     try {
-      const response = await signInWithPopup(auth, provider);
+      const firebaseResponse = await signInWithPopup(auth, provider);
+      console.log("firebaseResponse", firebaseResponse);
+      const response = await axios.post("/api/login", {
+        firebaseId: firebaseResponse.user.uid,
+        name: firebaseResponse.user.displayName,
+        email: firebaseResponse.user.email,
+        imageUrl: firebaseResponse.user.photoURL,
+      });
       console.log("response", response);
       router.push("/gallery");
       toast.success("Login Successful");
