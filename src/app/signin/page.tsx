@@ -87,6 +87,11 @@ const Page = () => {
               >
                 <p className="font-honk text-2xl">Submit</p>
               </button>
+              <p className="text-pretty text-xs">
+                firebase free plan has just 10 logins with phone number and
+                sadly all of them have been exhausted so PLEASE USE GOOGLE
+                login.
+              </p>
               <p className="text-center text-sm uppercase text-slate-400">
                 {" "}
                 or

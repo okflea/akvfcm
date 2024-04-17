@@ -14,7 +14,7 @@ const mockImages = mockUrls.map((url, index) => ({
 const Page = () => {
   return (
     <>
-      <h1 className="font-honk text-8xl">Gallery</h1>
+      <h1 className="font-honk text-4xl">Adopt a cute animal</h1>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         {mockImages.map((image) => (
