@@ -5,12 +5,29 @@ import { FormData, UserSchema } from "~/lib/types";
 import FormField from "../components/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { auth } from "~/firebase/config";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
 );
 
 const Page = () => {
+  const router = useRouter();
+
+  const provider = new GoogleAuthProvider();
+  const handleLoginWithGoogle = async () => {
+    try {
+      const response = await signInWithPopup(auth, provider);
+      console.log("response", response);
+      router.push("/gallery");
+      toast.success("Login Successful");
+    } catch (err) {
+      toast.error("Something went wrong");
+      console.log(err);
+    }
+  };
   const onSubmit = async (data: FormData) => {
     const { phone } = data;
     const isValid = phoneRegex.test(phone);
@@ -55,6 +72,18 @@ const Page = () => {
                 className="submit-button rounded-lg bg-slate-100  p-3  hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
               >
                 <p className="font-honk text-2xl">Submit</p>
+              </button>
+              <p className="text-center text-sm uppercase text-slate-400">
+                {" "}
+                or
+              </p>
+
+              <button
+                type="button"
+                className=" rounded-lg bg-slate-100  p-3  hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                onClick={handleLoginWithGoogle}
+              >
+                <p className="font-honk text-2xl">Login with Google</p>
               </button>
             </div>
           </form>
