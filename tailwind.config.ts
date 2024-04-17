@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        honk: ["var(--font-honk)", ...fontFamily.sans],
       },
     },
   },
