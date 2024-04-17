@@ -6,8 +6,14 @@ import FormField from "../components/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { auth } from "~/firebase/config";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
@@ -16,6 +22,14 @@ const phoneRegex = new RegExp(
 const Page = () => {
   const router = useRouter();
 
+  const user = auth.currentUser;
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/gallery");
+      }
+    });
+  }, []);
   const provider = new GoogleAuthProvider();
   const handleLoginWithGoogle = async () => {
     try {

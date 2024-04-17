@@ -1,5 +1,6 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getMessaging } from "firebase/messaging";
 import { getStorage } from "firebase/storage";
 
 const FirebaseCredentials = {
@@ -19,6 +20,7 @@ if (getApps().length === 0 || !getApps()[0]) {
 
 export const auth = getAuth(firebase_app);
 export const storage = getStorage(firebase_app);
+export const messaging = getMessaging(firebase_app);
 
 export default firebase_app;
 

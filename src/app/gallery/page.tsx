@@ -19,15 +19,17 @@ const Page = () => {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         {mockImages.map((image) => (
           <div
-            className=" rounded-lg bg-gradient-to-t from-slate-200 to-slate-500 p-1 pb-5"
+            className="flex flex-col justify-between rounded-lg bg-gradient-to-t from-slate-200 to-slate-500 p-1 pb-2"
             key={image.id}
           >
             <img className="h-auto max-w-full rounded-lg" src={image.url} />
             <div className="mt-2">
-              <button className=" mx-2 rounded-lg bg-slate-100 px-2 hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
-                <p className="font-honk">Buy</p>
+              <button className=" mx-2 rounded-md bg-slate-100 p-2 hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                <p className="text-sm font-semibold text-slate-700">Adopt</p>
               </button>
-              <p className="float-end mt-auto text-center">Image {image.id}</p>
+              <p className="float-end text-sm font-semibold text-slate-700">
+                Image {image.id}
+              </p>
             </div>
           </div>
         ))}
