@@ -56,6 +56,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { status: 200 },
       );
     } else {
+      console.log(error);
       return NextResponse.json(
         { statusText: "Error while creating token" },
         { status: 500 },

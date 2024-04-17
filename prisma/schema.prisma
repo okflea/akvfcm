@@ -19,6 +19,8 @@ model User {
   imageUrl           String?
   createdAt          DateTime            @default(now())
   NotificationTokens NotificationToken[]
+  notificationsIds   String[]            @db.ObjectId
+  notifications      Notification[]      @relation("User")
 }
 
 model NotificationToken {
@@ -30,4 +32,15 @@ model NotificationToken {
   createdAt DateTime @default(now())
 
   @@unique([userId, deviceId, token])
+}
+
+model Notification {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  link        String?
+  read        Boolean  @default(false)
+  UserId      String   @db.ObjectId
+  User        User     @relation("User", fields: [UserId], references: [id])
 }

@@ -1,3 +1,9 @@
+"use client";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "sonner";
+import { useState } from "react";
+
 const mockUrls = [
   "https://1.bp.blogspot.com/-44RJKI4Ro0U/Xqoit7Aqx9I/AAAAAAAAK9M/TBEwLlTwW6gR54DjNiGmKcPB17lJRwS2QCLcBGAsYHQ/s1600/Animal_4.png",
   "https://i.pinimg.com/originals/81/41/db/8141db7fdbec49d9e54188b8e37bdf6b.jpg",
@@ -12,6 +18,22 @@ const mockImages = mockUrls.map((url, index) => ({
 }));
 
 const Page = () => {
+  const { user } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleAdopt = async (animalIndex: string) => {
+    setLoading(true);
+    const response = await axios.post("/api/adopt", {
+      animalId: animalIndex,
+      heroName: user?.name,
+      sourceEmail: user?.email,
+    });
+    if (response.status === 200) {
+      toast.success("Adopted successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
+    setLoading(false);
+  };
   return (
     <>
       <h1 className="font-honk text-4xl">Adopt a cute animal</h1>
@@ -24,7 +46,13 @@ const Page = () => {
           >
             <img className="h-auto max-w-full rounded-lg" src={image.url} />
             <div className="mt-2">
-              <button className=" mx-2 rounded-md bg-slate-100 p-2 hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+              <button
+                className=" mx-2 rounded-md bg-slate-100 p-2 hover:bg-slate-300 hover:ring-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                onClick={() => {
+                  handleAdopt(image.id.toString());
+                }}
+                disabled={loading}
+              >
                 <p className="text-sm font-semibold text-slate-700">Adopt</p>
               </button>
               <p className="float-end text-sm font-semibold text-slate-700">
